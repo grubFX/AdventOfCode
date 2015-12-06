@@ -3,7 +3,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class day6_1 {
     public static void main(String[] args) throws IOException {
@@ -28,28 +27,20 @@ public class day6_1 {
             p1 = new Point(Integer.parseInt(arr2[0]), Integer.parseInt(arr2[1]));
             arr2 = arr[3].split(",");
             p2 = new Point(Integer.parseInt(arr2[0]), Integer.parseInt(arr2[1]));
-            switch (arr[0]) {
-                case "turnon":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+            for (int i = p1.x; i <= p2.x; i++) {
+                for (int j = p1.y; j <= p2.y; j++) {
+                    switch (arr[0]) {
+                        case "turnon":
                             lights[i][j] = true;
-                        }
-                    }
-                    break;
-                case "turnoff":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+                            break;
+                        case "turnoff":
                             lights[i][j] = false;
-                        }
-                    }
-                    break;
-                case "toggle":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+                            break;
+                        case "toggle":
                             lights[i][j] = !lights[i][j];
-                        }
+                            break;
                     }
-                    break;
+                }
             }
         }
         for (int i = 0; i < 1000; i++) {

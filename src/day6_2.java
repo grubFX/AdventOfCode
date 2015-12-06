@@ -27,31 +27,23 @@ public class day6_2 {
             p1 = new Point(Integer.parseInt(arr2[0]), Integer.parseInt(arr2[1]));
             arr2 = arr[3].split(",");
             p2 = new Point(Integer.parseInt(arr2[0]), Integer.parseInt(arr2[1]));
-            switch (arr[0]) {
-                case "turnon":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+            for (int i = p1.x; i <= p2.x; i++) {
+                for (int j = p1.y; j <= p2.y; j++) {
+                    switch (arr[0]) {
+                        case "turnon":
                             lights[i][j]++;
-                        }
-                    }
-                    break;
-                case "turnoff":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+                            break;
+                        case "turnoff":
                             lights[i][j]--;
                             if (lights[i][j] < 0) {
                                 lights[i][j] = 0;
                             }
-                        }
-                    }
-                    break;
-                case "toggle":
-                    for (int i = p1.x; i <= p2.x; i++) {
-                        for (int j = p1.y; j <= p2.y; j++) {
+                            break;
+                        case "toggle":
                             lights[i][j] += 2;
-                        }
+                            break;
                     }
-                    break;
+                }
             }
         }
         for (int i = 0; i < 1000; i++) {
