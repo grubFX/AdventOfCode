@@ -12,12 +12,12 @@ for (let p of ppStrings) {
 }
 
 let filtered = passports.filter(pp => {
-    return pp.hasOwnProperty('byr') &&
-        pp.hasOwnProperty('iyr') &&
-        pp.hasOwnProperty('eyr') &&
-        pp.hasOwnProperty('hgt') &&
-        pp.hasOwnProperty('hcl') &&
-        pp.hasOwnProperty('ecl') &&
-        pp.hasOwnProperty('pid')
+    return pp.hasOwnProperty('byr') && Number(pp['byr'] >= 1920 && Number(pp['byr'] <= 2002)) &&
+        pp.hasOwnProperty('iyr') && Number(pp['iyr'] >= 2010 && Number(pp['iyr'] <= 2020)) &&
+        pp.hasOwnProperty('eyr') && Number(pp['eyr'] >= 2020 && Number(pp['eyr'] <= 2030)) &&
+        pp.hasOwnProperty('hgt') && //TODO
+        pp.hasOwnProperty('hcl') && //TODO
+        pp.hasOwnProperty('ecl') && //TODO
+        pp.hasOwnProperty('pid') //TODO
 })
 console.log(filtered.length)
