@@ -11,3 +11,13 @@ for (let p of ppStrings) {
     passports.push(passport)
 }
 
+let filtered = passports.filter(pp => {
+    return pp.hasOwnProperty('byr') &&
+        pp.hasOwnProperty('iyr') &&
+        pp.hasOwnProperty('eyr') &&
+        pp.hasOwnProperty('hgt') &&
+        pp.hasOwnProperty('hcl') &&
+        pp.hasOwnProperty('ecl') &&
+        pp.hasOwnProperty('pid')
+})
+console.log(filtered.length)
