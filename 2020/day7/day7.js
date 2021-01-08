@@ -23,3 +23,23 @@ for (var line of lines) {
     })
 }
 
+var goodColors = ["shinygold"];
+do {
+    var lastCnt = goodColors.length
+    for (var rule of ruleList) {
+        if (canContain(rule) && !goodColors.includes(rule.key))
+            goodColors.push(rule.key)
+    }
+} while (lastCnt != goodColors.length)
+console.log(goodColors.length - 1) // -1 for itself
+
+function canContain(rule) {
+    var canContain = false;
+    for (var bag of rule.containedBags) {
+        for (var col of goodColors) {
+            if (col == bag.name)
+                canContain = true
+        }
+    }
+    return canContain;
+}
