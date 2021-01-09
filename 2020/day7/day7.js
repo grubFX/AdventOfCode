@@ -27,11 +27,13 @@ var goodColors = ["shinygold"];
 do {
     var lastCnt = goodColors.length
     for (var rule of ruleList) {
-        if (canContain(rule) && !goodColors.includes(rule.key))
+        if (canContain(rule) && !goodColors.includes(rule.key)) {
             goodColors.push(rule.key)
+        }
     }
 } while (lastCnt != goodColors.length)
-console.log(goodColors.length - 1) // -1 for itself
+console.log(`good colors: ${(goodColors.length - 1)}`) // -1 for itself
+console.log(`contained bags: ${containsBags("shinygold") - 1}`) // -1 for itself
 
 function canContain(rule) {
     var canContain = false;
@@ -42,4 +44,19 @@ function canContain(rule) {
         }
     }
     return canContain;
+}
+
+function containsBags(color) {
+    var rules = ruleList.filter((r) => (r.key == color))
+    if (rules == null || rules.length == 0)
+        return 1
+
+    let sum = 1
+    for (var rule of rules) {
+        for (var bag of rule.containedBags) {
+            if (bag.amount != 'no')
+                sum += Number(bag.amount) * containsBags(bag.name)
+        }
+    }
+    return sum
 }
