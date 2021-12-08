@@ -1,17 +1,14 @@
-const fs = require('fs')
-const input = fs.readFileSync('day1.txt', 'utf8')
+import { readFileSync } from 'fs';
+const input = readFileSync('day1.txt', 'utf8')
 const lines = input.split(/\r?\n/)
 
-var inc = 0, dec = 0, lastLine = null;
-lines.forEach(line => {
-    if (lastLine) {
-        if (Number(line) < lastLine) {
-            dec++;
-        }
-        else if (Number(line) > lastLine) {
-            inc++;
-        }
+let inc = 0, lastLine = null, window = new Array(lines.length);
+for (var i = 0; i < lines.length - 3; i++) { // exclude last two
+    window[i] = Number(lines[i]) + Number(lines[i + 1]) + Number(lines[i + 2]);
+    if (lastLine && window[i] > lastLine) {
+        inc += 1;
     }
-    lastLine = Number(line);
-});
+    lastLine = window[i];
+};
+
 console.log(inc);
