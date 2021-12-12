@@ -24,16 +24,16 @@ class Fishy {
     }
 }
 
-part1();
-part2();
+calc(80);
+calc(256); // won't run, out of memory lol
 
-function part1() {
+function calc(numDays) {
     let fishies = [];
     numbers.forEach(number => {
         fishies.push(new Fishy(number));
     });
 
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < numDays; i++) {
         let newFishies = [];
         fishies.forEach(fish => {
             let newFish = fish.tick();
@@ -44,8 +44,3 @@ function part1() {
     }
     console.log(fishies.length);
 }
-
-function part2() {
-
-}
-
