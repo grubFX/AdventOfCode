@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
-const input = readFileSync('day7.txt', 'utf8')
-const lines = input.split(/\r?\n/)
+const input = readFileSync('day7.txt', 'utf8');
+const lines = input.split(/\r?\n/);
 const numbers = lines[0].split(',').map(Number);
 const min = Math.min(...numbers), max = Math.max(...numbers);
 console.log('min: ' + min + ' max: ' + max);
