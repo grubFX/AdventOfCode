@@ -20,7 +20,7 @@ function readHeader() {
     }
 }
 
-function applyInstructions() {
+function applyInstructionsPart1() {
     instructions.forEach(instruction => {
         let parts = instruction.split(" ");
         for (let i = 0; i < Number(parts[1]); i++) {
@@ -29,14 +29,26 @@ function applyInstructions() {
     });
 }
 
+function applyInstructionsPart2() {
+    instructions.forEach(instruction => {
+        let parts = instruction.split(" ");
+        let toMove = map[Number(parts[3])].splice(-Number(parts[1]))
+        map[Number(parts[5])].push(...toMove)
+    });
+}
+
 function peekAtEnds() {
     let output = "";
     for (let i = 1; i <= 9; i++) {
         output += map[i].slice(-1)
     }
-    console.log(output)
+    return output;
 }
 
 readHeader()
-applyInstructions()
-peekAtEnds()
+applyInstructionsPart1()
+console.log("part1: " + peekAtEnds())
+
+readHeader()
+applyInstructionsPart2()
+console.log("part2: " + peekAtEnds())
