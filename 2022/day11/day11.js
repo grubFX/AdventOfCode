@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 const input = readFileSync('day11.txt', 'utf8')
-const monkeyInput = input.split(/\n\n/), monkeys = new Map(), maxRounds = 20
+const monkeyInput = input.split(/\n\n/), monkeys = new Map()
+let globalMod
 
 class Monkey {
     constructor(startingItems, operation, divisibleBy, ifTrue, ifFalse) {
@@ -26,44 +27,58 @@ function parseMonkey(inputText) {
             Number(lines[5].slice(30))))
 }
 
-monkeyInput.forEach(monkeyText => {
-    parseMonkey(monkeyText)
-})
+function init() {
+    monkeyInput.forEach(monkeyText => {
+        parseMonkey(monkeyText)
+    })
 
-function calcRound(monkey) {
-    let parts = [], arg, worryLevel, targetMonkey
+    globalMod = [...monkeys.values()]
+    .map(m => m.divisibleBy)
+    .reduce((a, b) => a * b)
+}
+
+function calcRound(monkey, divideBy) {
+    let parts = [], arg, worryLevel, targetMonkey, val
     while (monkey.startingItems.length > 0) {
         parts = monkey.operation.split(" ")
         arg = (parts[1] == "old") ?
             monkey.startingItems[0] :
             Number(parts[1])
+        val = monkey.startingItems.shift()
         switch (parts[0]) {
-            case "*":
-                worryLevel = monkey.startingItems.shift() * arg
-                break
-            case "+":
-                worryLevel = monkey.startingItems.shift() + arg
-                break
+            case "+": worryLevel = val + arg; break
+            case "*": worryLevel = val * arg; break
         }
-        worryLevel = Math.floor(worryLevel / 3)
+
+        worryLevel = Math.floor(worryLevel / divideBy) % globalMod
         targetMonkey = (worryLevel % monkey.divisibleBy == 0) ?
             monkey.ifTrue :
             monkey.ifFalse;
-        console.log(`passing ${worryLevel} to monkey ${targetMonkey}`)
         monkeys.get(targetMonkey).startingItems.push(worryLevel)
         monkey.numComparisons++
     }
 }
 
-for (let round = 0; round < maxRounds; round++) {
-    [...monkeys.values()].forEach(monkey => {
-        calcRound(monkey)
-    });
+function main(maxRounds, divideBy) {
+    for (let round = 0; round < maxRounds; round++) {
+        [...monkeys.values()].forEach(monkey => {
+            calcRound(monkey, divideBy)
+        });
+    }
+
+    console.log("\n----------------------------")
+    console.log(`num rounds: ${maxRounds}`)
+    monkeys.forEach((value, key) => {
+        console.log(`monkey ${key}, numComps: ${value.numComparisons}`)
+    })
+    let sorted = [...monkeys.values()]
+        .map(m => m.numComparisons)
+        .sort((a, b) => b - a)
+    console.log(`\nresult: ${sorted[0] * sorted[1]}`)
 }
 
-console.log()
-monkeys.forEach((value, key) => {
-    console.log(`monkey ${key}, numComps: ${value.numComparisons}`)
-})
+init()
+main(20, 3) // 56595
 
-//TODO multiply two highest vals
+init()
+main(10000, 1) // 15693274740
